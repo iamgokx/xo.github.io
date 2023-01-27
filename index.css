@@ -6,7 +6,7 @@ body{
     align-items: center;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
     gap: 1rem;
 }
 
@@ -36,6 +36,10 @@ body{
 
 }
 
+.cell:hover{
+    background-color: #021433;
+}
+
 .bottom{
     border-bottom: 9px solid rgb(0, 140, 255);
 }
@@ -46,9 +50,12 @@ body{
 
 .btns{
     width: 23rem;
+    display: flex;
+    align-items: center;
 }
 .btn{
-    width: 100%;
+    width: 60%;
+    margin: 0 auto;
     height: 3rem;
     border: none;
     border-radius: 30px;
@@ -56,7 +63,13 @@ body{
     color: black;
     background-image: linear-gradient(to right top, #c1fd4f, #b9fd43, #b0fe34, #a6fe23, #9cff00);
     font-family: 'Nunito', sans-serif;
+    transition: 0.5s;
     
+}
+
+.btn:hover{
+    border-radius: 0;
+    border:2px solid rgb(0, 0, 0);
 }
 .screen{
     width: 23rem;
