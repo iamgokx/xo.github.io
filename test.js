@@ -18,8 +18,11 @@ let blockSeven = document.getElementById("7");
 let blockEight = document.getElementById("8");
 let blockNine = document.getElementById("9");
 let resultScreen = document.getElementById("resultScreen");
+let box = document.getElementById('box')
+
 
 function reset() {
+  
   blocksArr = ["a", "a", "a", "a", "a", "a", "a", "a", "a"];
   blockOne.innerText = "";
   blockTwo.innerText = "";
@@ -35,7 +38,11 @@ function reset() {
   comChoice = 0;
   resultScreen.style.transform = "translateY(-70px)";
   testNum = 0;
+  box.style.animation= "rotation 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1";
+  
 }
+
+
 
 function randomChoice(comChoice) {
   if (blocksArr[0] == "a") {
@@ -297,7 +304,8 @@ function computerO() {
     blocksArr[8] == "X" ||
     blocksArr[9] == "X"
   ) {
-    comChoice = 4;
+    box.style.animation= "none";
+     comChoice = 4;
   } else if (blocksArr[4] == "X") {
     comChoice = Math.floor(Math.random() * 3);
   } else {
@@ -435,19 +443,7 @@ blockNine.addEventListener("click", () => {
 //algo
 
 function checkStatus() {
-  if (
-    blocksArr[0] != "a" &&
-    blocksArr[1] != "a" &&
-    blocksArr[2] != "a" &&
-    blocksArr[3] != "a" &&
-    blocksArr[4] != "a" &&
-    blocksArr[5] != "a" &&
-    blocksArr[6] != "a" &&
-    blocksArr[7] != "a" &&
-    blocksArr[8] != "a"
-  ) {
-    resultScreen.style.transform = "translateY(-190px)";
-  } else if (
+   if (
     blocksArr[0] == "X" &&
     blocksArr[1] == "X" &&
     blocksArr[2] == "X"
@@ -543,5 +539,17 @@ function checkStatus() {
     blocksArr[6] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+  }else if (
+    blocksArr[0] != "a" &&
+    blocksArr[1] != "a" &&
+    blocksArr[2] != "a" &&
+    blocksArr[3] != "a" &&
+    blocksArr[4] != "a" &&
+    blocksArr[5] != "a" &&
+    blocksArr[6] != "a" &&
+    blocksArr[7] != "a" &&
+    blocksArr[8] != "a"
+  ) {
+    resultScreen.style.transform = "translateY(-190px)";
   }
 }

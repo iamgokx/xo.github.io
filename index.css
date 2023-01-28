@@ -1,98 +1,124 @@
-body{
-    background-image: linear-gradient(to right top, #051227, #021433, #02143f, #0e1249, #1e0c51);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    overflow-x: hidden;
-    gap: 1rem;
+body {
+  background-color: #021433;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  gap: 1rem;
+  transition: all 0.5s;
 }
 
-.box{
-    width: 23rem;
-    height: 23rem;
-
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-evenly;
-
-}
-
-.cell{
-    width:7rem ;
-    height:7rem ;
-    font-size: 80px;
-    color: yellow;
- 
-    margin: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Nunito', sans-serif;
-
-}
-
-.cell:hover{
-    background-color: #021433;
-}
-
-.bottom{
-    border-bottom: 9px solid rgb(0, 140, 255);
-}
-
-.right{
-    border-right: 9px solid  rgb(0, 140, 255);
-}
-
-.btns{
-    width: 23rem;
-    display: flex;
-    align-items: center;
-}
-.btn{
-    width: 60%;
-    margin: 0 auto;
-    height: 3rem;
-    border: none;
-    border-radius: 30px;
-    font-size: 30px;
-    color: black;
-    background-image: linear-gradient(to right top, #c1fd4f, #b9fd43, #b0fe34, #a6fe23, #9cff00);
-    font-family: 'Nunito', sans-serif;
-    transition: 0.5s;
-    
-}
-
-.btn:hover{
-    border-radius: 0;
-    border:2px solid rgb(0, 0, 0);
-}
-.screen{
-    width: 23rem;
-    height: 4rem;
-     color: ghostwhite;
-    font-size: 50px;
-    font-family: 'Raleway', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: 0.5s ease;
-    overflow: hidden;
-
-}
-
-#resultScreen{
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    transform: translateY(-70px);
-    transition: 0.5s ease;
+.box {
+  width: 21.8rem;
+  height: 21.5rem;
+border-radius: 40%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #9cff00;
  
 }
 
+#box{
+    animation: rotationdefault 1s ease-out 1;
+    animation-timing-function:cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin-bottom: 4rem;
+}
 
+.animation{
+    animation: rotation 1s ease-out 1;
+}
+
+@keyframes rotation {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotationdefault {
+    100% {
+        transform: rotate(360deg);
+      }
+}
+
+.cell {
+  width: 7rem;
+  height: 7rem;
+  font-size: 80px;
+  color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Nunito", sans-serif;
+  transition: 1s;
+  background-color: #021433;
+
+}
+
+.cell:hover {
+  background-color: #021433;
+}
+
+.bottom {
+  margin-bottom: 6px;
+}
+
+.right {
+  margin-right: 6px;
+}
+
+.btns {
+  width: 23rem;
+  display: flex;
+  align-items: center;
+}
+.btn {
+  width: 60%;
+  margin: 0 auto;
+  height: 3rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 30px;
+  color: black;
+  background-image: linear-gradient(
+    to right top,
+    #c1fd4f,
+    #b9fd43,
+    #b0fe34,
+    #a6fe23,
+    #9cff00
+  );
+  font-family: "Nunito", sans-serif;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  border-radius: 0;
+  border: 2px solid rgb(0, 0, 0);
+}
+.screen {
+  width: 23rem;
+  height: 4rem;
+  color: ghostwhite;
+  font-size: 50px;
+  font-family: "Raleway", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s ease;
+  overflow: hidden;
+}
+
+#resultScreen {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  transform: translateY(-70px);
+  transition: 0.5s ease;
+}

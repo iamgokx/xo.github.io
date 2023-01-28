@@ -9,11 +9,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Raleway:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
-    <title>Document</title>
+    <title>X O</title>
 </head>
 
 <body>
-    <div class="box">
+    <div class="box" id="box">
         <div class="cell bottom right" id="1"></div>
         <div class="cell bottom right" id="2"></div>
         <div class="cell bottom" id="3"></div>
@@ -25,17 +25,19 @@
         <div class="cell" id="9"></div>
     </div>
 
+    
+
 
     <div class="btns">
-        <button class="btn" onclick="reset()">Reset</button>
+        <button class="btn" onclick="reset()" ondblclick="boom()">Reset</button>
     </div>
 
     <div class="screen">
 
         <span id="resultScreen">‎ ‎ ‎ ‎ ‎ ‎ ‎ You win
             ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎
-            Computer Wins‎ ‎ 
-        Draw</span>
+            Computer Wins‎ ‎
+            Draw</span>
     </div>
 
 
