@@ -6,6 +6,7 @@ function computerChoice() {
 
 let cChoiceFlag = 0;
 let comChoice = 0;
+let testNum = 0;
 
 let blockOne = document.getElementById("1");
 let blockTwo = document.getElementById("2");
@@ -33,6 +34,36 @@ function reset() {
   cChoiceFlag = 0;
   comChoice = 0;
   resultScreen.style.transform = "translateY(-70px)";
+  testNum = 0;
+}
+
+function randomChoice(comChoice) {
+  if(blocksArr[0]=="a"){
+    return 0
+  }else if (blocksArr[1]=="a"){
+    return 1
+  }
+  else if (blocksArr[2]=="a"){
+    return 2
+  }
+  else if (blocksArr[3]=="a"){
+    return 3
+  }
+  else if (blocksArr[4]=="a"){
+    return 4
+  }
+  else if (blocksArr[5]=="a"){
+    return 5
+  }
+  else if (blocksArr[6]=="a"){
+    return 6
+  }
+  else if (blocksArr[6]=="a"){
+    return 6
+  }
+  else if (blocksArr[8]=="a"){
+    return 8
+  }
 }
 
 function comScreen(num) {
@@ -80,11 +111,204 @@ function comScreen(num) {
 }
 
 function computerO() {
-  comChoice = computerChoice();
-  if (blocksArr[comChoice] == "X") {
-    computerO();
-  } else if (blocksArr[comChoice] == "") {
-    return;
+  if (
+    (blocksArr[0] == "X" && blocksArr[1] == "X") ||
+    (blocksArr[5] == "X" && blocksArr[8] == "X") ||
+    (blocksArr[6] == "X" && blocksArr[4] == "X")
+  ) {
+    if (blocksArr[2] == "a") {
+      comChoice = 2;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[1] == "X" && blocksArr[2] == "X") ||
+    (blocksArr[3] == "X" && blocksArr[6] == "X") ||
+    (blocksArr[4] == "X" && blocksArr[8] == "X")
+  ) {
+    if (blocksArr[0] == "a") {
+      comChoice = 0;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[0] == "X" && blocksArr[2] == "X") ||
+    (blocksArr[4] == "X" && blocksArr[7] == "X")
+  ) {
+    if (blocksArr[1] == "a") {
+      comChoice = 1;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[0] == "X" && blocksArr[6] == "X") ||
+    (blocksArr[4] == "X" && blocksArr[5] == "X")
+  ) {
+    if (blocksArr[3] == "a") {
+      comChoice = 3;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[2] == "X" && blocksArr[8] == "X") {
+    if (blocksArr[5] == "a") {
+      comChoice = 5;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[0] == "X" && blocksArr[3] == "X") ||
+    (blocksArr[7] == "X" && blocksArr[8] == "X") ||
+    (blocksArr[2] == "X" && blocksArr[4] == "X")
+  ) {
+    if (blocksArr[6] == "a") {
+      comChoice = 6;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[1] == "X" && blocksArr[4] == "X") ||
+    (blocksArr[6] == "X" && blocksArr[8] == "X")
+  ) {
+    if (blocksArr[7] == "a") {
+      comChoice = 7;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[6] == "X" && blocksArr[7] == "X") ||
+    (blocksArr[2] == "X" && blocksArr[5] == "X") ||
+    (blocksArr[0] == "X" && blocksArr[4] == "X")
+  ) {
+    if (blocksArr[8] == "a") {
+      comChoice = 8;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[0] == "X" && blocksArr[5] == "X") {
+    //odd cases
+    if (blocksArr[2] == "a") {
+      comChoice = 2;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[0] == "X" && blocksArr[7] == "X") {
+    if (blocksArr[6] == "a") {
+      comChoice = 6;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[0] == "X" && blocksArr[8] == "X") {
+    if (blocksArr[6] == "a") {
+      comChoice = 6;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[1] == "X" && blocksArr[3] == "X") ||
+    (blocksArr[1] == "X" && blocksArr[6] == "X")
+  ) {
+    if (blocksArr[0] == "a") {
+      comChoice = 0;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[1] == "X" && blocksArr[5] == "X") ||
+    (blocksArr[1] == "X" && blocksArr[8] == "X")
+  ) {
+    if (blocksArr[2] == "a") {
+      comChoice = 2;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[1] == "X" && blocksArr[7] == "X") {
+   if (blocksArr[5] == "a") {
+      comChoice = 5;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[2] == "X" && blocksArr[3] == "X") {
+    if (blocksArr[0] == "a") {
+      comChoice = 0;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[2] == "X" && blocksArr[7] == "X") {
+    if (blocksArr[8] == "a") {
+      comChoice = 8;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[2] == "X" && blocksArr[6] == "X") ||
+    (blocksArr[0] == "X" && blocksArr[8] == "X")
+  ) {
+    if (blocksArr[1] == "a") {
+      comChoice = 1;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    (blocksArr[5] == "X" && blocksArr[3] == "X") ||
+    (blocksArr[1] == "X" && blocksArr[7] == "X")
+  ) {
+    if (blocksArr[0] == "a") {
+      comChoice = 0;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[3] == "X" && blocksArr[7] == "X") {
+    if (blocksArr[6] == "a") {
+      comChoice = 6;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[5] == "X" && blocksArr[7] == "X") {
+    if (blocksArr[8] == "a") {
+      comChoice = 8;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[5] == "X" && blocksArr[6] == "X") {
+    if (blocksArr[8] == "a") {
+      comChoice = 8;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[5] == "X" && blocksArr[0] == "X") {
+    if (blocksArr[2] == "a") {
+      comChoice = 2;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[6] == "X" && blocksArr[5] == "X") {
+    if (blocksArr[8] == "a") {
+      comChoice = 8;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (blocksArr[6] == "X" && blocksArr[1] == "X") {
+    if (blocksArr[0] == "a") {
+      comChoice = 0;
+    }else {
+    comChoice = randomChoice();
+  }
+  } else if (
+    blocksArr[0] == "X" ||
+    blocksArr[1] == "X" ||
+    blocksArr[2] == "X" ||
+    blocksArr[3] == "X" ||
+    blocksArr[5] == "X" ||
+    blocksArr[6] == "X" ||
+    blocksArr[7] == "X" ||
+    blocksArr[8] == "X" ||
+    blocksArr[9] == "X"
+  ) {
+    comChoice = 4;
+  } else if (blocksArr[4] == "X") {
+    comChoice = Math.floor(Math.random() * 3);
+  } else {
+    comChoice = randomChoice();
   }
 }
 
@@ -201,14 +425,16 @@ blockEight.addEventListener("click", () => {
 });
 
 blockNine.addEventListener("click", () => {
-  if(blocksArr[8]=='a'){cChoiceFlag = 0;
-  blockNine.innerText = "X";
-  blocksArr[8] = "X";
-  computerO();
-  blocksArr[comChoice] = "O";
-  comScreen(comChoice);
-  checkStatus();
-  console.log(blocksArr);}else if (blocksArr[8] == "O") {
+  if (blocksArr[8] == "a") {
+    cChoiceFlag = 0;
+    blockNine.innerText = "X";
+    blocksArr[8] = "X";
+    computerO();
+    blocksArr[comChoice] = "O";
+    comScreen(comChoice);
+    checkStatus();
+    console.log(blocksArr);
+  } else if (blocksArr[8] == "O") {
     return;
   }
 });
