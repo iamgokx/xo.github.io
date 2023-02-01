@@ -300,7 +300,7 @@ function computerO() {
     } else {
       comChoice = randomChoice();
     }
-  }  else if ( ////////////////////////////////////////////////////////////////////////////////////////////////////
+  }  else if ( 
     (blocksArr[0] == "X" && blocksArr[1] == "X") ||
     (blocksArr[5] == "X" && blocksArr[8] == "X") ||
     (blocksArr[6] == "X" && blocksArr[4] == "X")
