@@ -36,6 +36,17 @@ function reset() {
   comChoice = 0;
   resultScreen.style.transform = "translateY(-70px)";
   testNum = 0;
+
+  blockOne.style.color = "black";
+    blockTwo.style.color = "black";
+    blockThree.style.color = "black";
+    blockFour.style.color = "black";
+    blockFive.style.color = "black";
+    blockSix.style.color = "black";
+    blockSeven.style.color = "black";
+    blockEight.style.color = "black";
+    blockNine.style.color = "black";
+
   box.style.animation =
     "rotation 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1";
 }
@@ -441,96 +452,145 @@ blockNine.addEventListener("click", () => {
 function checkStatus() {
   if (blocksArr[0] == "X" && blocksArr[1] == "X" && blocksArr[2] == "X") {
     resultScreen.style.transform = "translateY(0)";
+    blockOne.style.color = "ghostwhite";
+    blockTwo.style.color = "ghostwhite";
+    blockThree.style.color = "ghostwhite";
+   
   } else if (
     blocksArr[3] == "X" &&
     blocksArr[4] == "X" &&
     blocksArr[5] == "X"
   ) {
     resultScreen.style.transform = "translateY(0)";
+    blockFour.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockSix.style.color = "ghostwhite";
   } else if (
     blocksArr[6] == "X" &&
     blocksArr[7] == "X" &&
     blocksArr[8] == "X"
   ) {
     resultScreen.style.transform = "translateY(0)";
+    blockSeven.style.color = "ghostwhite";
+    blockEight.style.color = "ghostwhite";
+    blockNine.style.color = "ghostwhite";
   } else if (
     blocksArr[0] == "X" &&
     blocksArr[3] == "X" &&
     blocksArr[6] == "X"
   ) {
     resultScreen.style.transform = "translateY(0)";
+    blockOne.style.color = "ghostwhite";
+    blockFour.style.color = "ghostwhite";
+    blockSeven.style.color = "ghostwhite";
   } else if (
     blocksArr[1] == "X" &&
     blocksArr[4] == "X" &&
     blocksArr[7] == "X"
   ) {
     resultScreen.style.transform = "translateY(0)";
+    blockTwo.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockEight.style.color = "ghostwhite";
   } else if (
     blocksArr[2] == "X" &&
     blocksArr[5] == "X" &&
     blocksArr[8] == "X"
   ) {
     resultScreen.style.transform = "translateY(0)";
+    blockThree.style.color = "ghostwhite";
+    blockSix.style.color = "ghostwhite";
+    blockNine.style.color = "ghostwhite";
   } else if (
     blocksArr[0] == "X" &&
     blocksArr[4] == "X" &&
     blocksArr[8] == "X"
   ) {
-    resultScreen.style.transform = "translateY(0)";
+    resultScreen.style.transform = "translateY(0)"
+    blockOne.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockNine.style.color = "ghostwhite";;
   } else if (
     blocksArr[2] == "X" &&
     blocksArr[4] == "X" &&
     blocksArr[6] == "X"
   ) {
     resultScreen.style.transform = "translateY(0)";
+    blockThree.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockSeven.style.color = "ghostwhite";
   } else if (
     blocksArr[0] == "O" &&
     blocksArr[1] == "O" &&
     blocksArr[2] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockOne.style.color = "ghostwhite";
+    blockTwo.style.color = "ghostwhite";
+    blockThree.style.color = "ghostwhite";
   } else if (
     blocksArr[3] == "O" &&
     blocksArr[4] == "O" &&
     blocksArr[5] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockFour.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockSix.style.color = "ghostwhite";
   } else if (
     blocksArr[6] == "O" &&
     blocksArr[7] == "O" &&
     blocksArr[8] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockSeven.style.color = "ghostwhite";
+    blockEight.style.color = "ghostwhite";
+    blockNine.style.color = "ghostwhite";
   } else if (
     blocksArr[0] == "O" &&
     blocksArr[3] == "O" &&
     blocksArr[6] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockOne.style.color = "ghostwhite";
+    blockFour.style.color = "ghostwhite";
+    blockSeven.style.color = "ghostwhite";
   } else if (
     blocksArr[1] == "O" &&
     blocksArr[4] == "O" &&
     blocksArr[7] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockTwo.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockEight.style.color = "ghostwhite";
   } else if (
     blocksArr[2] == "O" &&
     blocksArr[5] == "O" &&
     blocksArr[8] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockThree.style.color = "ghostwhite";
+    blockSix.style.color = "ghostwhite";
+    blockNine.style.color = "ghostwhite";
   } else if (
     blocksArr[0] == "O" &&
     blocksArr[4] == "O" &&
     blocksArr[8] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockOne.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockNine.style.color = "ghostwhite";
   } else if (
     blocksArr[2] == "O" &&
     blocksArr[4] == "O" &&
     blocksArr[6] == "O"
   ) {
     resultScreen.style.transform = "translateY(-120px)";
+    blockThree.style.color = "ghostwhite";
+    blockFive.style.color = "ghostwhite";
+    blockSeven.style.color = "ghostwhite";
   } else if (
     blocksArr[0] != "a" &&
     blocksArr[1] != "a" &&
@@ -543,5 +603,14 @@ function checkStatus() {
     blocksArr[8] != "a"
   ) {
     resultScreen.style.transform = "translateY(-190px)";
+    blockOne.style.color = "brown";
+    blockTwo.style.color = "brown";
+    blockThree.style.color = "brown";
+    blockFour.style.color = "brown";
+    blockFive.style.color = "brown";
+    blockSix.style.color = "brown";
+    blockSeven.style.color = "brown";
+    blockEight.style.color = "brown";
+    blockNine.style.color = "brown";
   }
 }
