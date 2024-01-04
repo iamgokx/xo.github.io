@@ -1,798 +1,164 @@
-let blocksArr = ["a", "a", "a", "a", "a", "a", "a", "a", "a"];
+var origBoard;
+const huPlayer = "X";
+const aiPlayer = "O";
+const winCombos = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [6, 4, 2],
+];
 
-function computerChoice() {
-  return Math.floor(Math.random() * 9);
+const cells = document.querySelectorAll(".cell");
+startGame();
+
+function startGame() {
+  // document.querySelector(".endgame").style.display = "none";
+  origBoard = Array.from(Array(9).keys());
+  for (var i = 0; i < cells.length; i++) {
+    cells[i].innerText = "";
+    cells[i].style.removeProperty("background-color");
+    cells[i].addEventListener("click", turnClick, false);
+  }
+  orangeClose();
+	blueClose();
+  document.querySelector(".endgame .text").innerText = '';
 }
 
-let cChoiceFlag = 0;
-let comChoice = 0;
-let testNum = 0;
-
-let blockOne = document.getElementById("1");
-let blockTwo = document.getElementById("2");
-let blockThree = document.getElementById("3");
-let blockFour = document.getElementById("4");
-let blockFive = document.getElementById("5");
-let blockSix = document.getElementById("6");
-let blockSeven = document.getElementById("7");
-let blockEight = document.getElementById("8");
-let blockNine = document.getElementById("9");
-let resultScreen = document.getElementById("resultScreen");
-let box = document.getElementById("box");
-
-function reset() {
-  blocksArr = ["a", "a", "a", "a", "a", "a", "a", "a", "a"];
-  blockOne.innerText = "";
-  blockTwo.innerText = "";
-  blockThree.innerText = "";
-  blockFour.innerText = "";
-  blockFive.innerText = "";
-  blockSix.innerText = "";
-  blockSeven.innerText = "";
-  blockEight.innerText = "";
-  blockNine.innerText = "";
-  flag = 0;
-  cChoiceFlag = 0;
-  comChoice = 0;
-  resultScreen.style.transform = "translateY(-70px)";
-  testNum = 0;
-
-  blockOne.style.color = "black";
-    blockTwo.style.color = "black";
-    blockThree.style.color = "black";
-    blockFour.style.color = "black";
-    blockFive.style.color = "black";
-    blockSix.style.color = "black";
-    blockSeven.style.color = "black";
-    blockEight.style.color = "black";
-    blockNine.style.color = "black";
-
-  box.style.animation =
-    "rotation 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1";
-}
-
-function randomChoice(comChoice) {
-  if (blocksArr[0] == "a") {
-    return 0;
-  } else if (blocksArr[1] == "a") {
-    return 1;
-  } else if (blocksArr[2] == "a") {
-    return 2;
-  } else if (blocksArr[3] == "a") {
-    return 3;
-  } else if (blocksArr[4] == "a") {
-    return 4;
-  } else if (blocksArr[5] == "a") {
-    return 5;
-  } else if (blocksArr[6] == "a") {
-    return 6;
-  } else if (blocksArr[6] == "a") {
-    return 6;
-  } else if (blocksArr[8] == "a") {
-    return 8;
+function turnClick(square) {
+  if (typeof origBoard[square.target.id] == "number") {
+    turn(square.target.id, huPlayer);
+    if (!checkWin(origBoard, huPlayer) && !checkTie())
+      turn(bestSpot(), aiPlayer);
   }
 }
 
-function comScreen(num) {
-  switch (num) {
-    case 0: {
-      blockOne.innerText = "O";
-      break;
-    }
-    case 1: {
-      blockTwo.innerText = "O";
-      break;
-    }
-    case 2: {
-      blockThree.innerText = "O";
-      break;
-    }
-    case 3: {
-      blockFour.innerText = "O";
-      break;
-    }
-    case 4: {
-      blockFive.innerText = "O";
-      break;
-    }
-    case 5: {
-      blockSix.innerText = "O";
-      break;
-    }
-    case 6: {
-      blockSeven.innerText = "O";
-      break;
-    }
-    case 7: {
-      blockEight.innerText = "O";
-      break;
-    }
-    case 8: {
-      blockNine.innerText = "O";
-      break;
-    }
-    default: {
-      return;
-    }
-  }
+function turn(squareId, player) {
+  origBoard[squareId] = player;
+  document.getElementById(squareId).innerText = player;
+  let gameWon = checkWin(origBoard, player);
+  if (gameWon) gameOver(gameWon);
 }
 
-function computerO() {
-  if (
-    (blocksArr[0] == "O" && blocksArr[1] == "O") ||
-    (blocksArr[5] == "O" && blocksArr[8] == "O") ||
-    (blocksArr[6] == "O" && blocksArr[4] == "O")
-  ) {
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
+function checkWin(board, player) {
+  let plays = board.reduce((a, e, i) => (e === player ? a.concat(i) : a), []);
+  let gameWon = null;
+  for (let [index, win] of winCombos.entries()) {
+    if (win.every((elem) => plays.indexOf(elem) > -1)) {
+      gameWon = { index: index, player: player };
+      break;
     }
-  } else if (
-    (blocksArr[1] == "O" && blocksArr[2] == "O") ||
-    (blocksArr[3] == "O" && blocksArr[6] == "O") ||
-    (blocksArr[4] == "O" && blocksArr[8] == "O")
-  ) {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
+  }
+  return gameWon;
+}
+
+function orangeOpen() {
+  document.getElementById("ai").style.height = "3000px";
+  document.getElementById("ai").style.width = "3000px";
+}
+function orangeClose() {
+  document.getElementById("ai").style.height = "0px";
+  document.getElementById("ai").style.width = "0px";
+}
+function blueOPen() {
+  document.getElementById("aidraw").style.height = "3000px";
+  document.getElementById("aidraw").style.width = "3000px";
+}
+function blueClose() {
+  document.getElementById("aidraw").style.height = "0px";
+  document.getElementById("aidraw").style.width = "0px";
+}
+
+function gameOver(gameWon) {
+  for (let index of winCombos[gameWon.index]) {
+    document.getElementById(index).style.backgroundColor =
+      gameWon.player == huPlayer ? "white" : "#faa200d5";
+  }
+  for (var i = 0; i < cells.length; i++) {
+    cells[i].removeEventListener("click", turnClick, false);
+  }
+ orangeOpen();
+
+  declareWinner(gameWon.player == huPlayer ? "YOU WIN!" : "YOU LOOSE");
+}
+
+function declareWinner(who) {
+  document.querySelector(".endgame").style.display = "block";
+  document.querySelector(".endgame .text").innerText = who;
+}
+
+function emptySquares() {
+  return origBoard.filter((s) => typeof s == "number");
+}
+
+function bestSpot() {
+  return minimax(origBoard, aiPlayer).index;
+}
+
+function checkTie() {
+  if (emptySquares().length == 0) {
+    for (var i = 0; i < cells.length; i++) {
+      cells[i].style.backgroundColor = "rgb(70, 203, 226)";
+      cells[i].removeEventListener("click", turnClick, false);
     }
-  } else if (
-    (blocksArr[0] == "O" && blocksArr[2] == "O") ||
-    (blocksArr[4] == "O" && blocksArr[7] == "O")
-  ) {
-    if (blocksArr[1] == "a") {
-      comChoice = 1;
+    declareWinner("Tie Game!");
+		blueOPen();
+    return true;
+  }
+  return false;
+}
+
+function minimax(newBoard, player) {
+  var availSpots = emptySquares();
+
+  if (checkWin(newBoard, huPlayer)) {
+    return { score: -10 };
+  } else if (checkWin(newBoard, aiPlayer)) {
+    return { score: 10 };
+  } else if (availSpots.length === 0) {
+    return { score: 0 };
+  }
+  var moves = [];
+  for (var i = 0; i < availSpots.length; i++) {
+    var move = {};
+    move.index = newBoard[availSpots[i]];
+    newBoard[availSpots[i]] = player;
+
+    if (player == aiPlayer) {
+      var result = minimax(newBoard, huPlayer);
+      move.score = result.score;
     } else {
-      comChoice = randomChoice();
+      var result = minimax(newBoard, aiPlayer);
+      move.score = result.score;
     }
-  } else if (
-    (blocksArr[0] == "O" && blocksArr[6] == "O") ||
-    (blocksArr[4] == "O" && blocksArr[5] == "O")
-  ) {
-    if (blocksArr[3] == "a") {
-      comChoice = 3;
-    } else {
-      comChoice = randomChoice();
+
+    newBoard[availSpots[i]] = move.index;
+
+    moves.push(move);
+  }
+
+  var bestMove;
+  if (player === aiPlayer) {
+    var bestScore = -10000;
+    for (var i = 0; i < moves.length; i++) {
+      if (moves[i].score > bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
     }
-  } else if (blocksArr[2] == "O" && blocksArr[8] == "O") {
-    if (blocksArr[5] == "a") {
-      comChoice = 5;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[0] == "O" && blocksArr[3] == "O") ||
-    (blocksArr[7] == "O" && blocksArr[8] == "O") ||
-    (blocksArr[2] == "O" && blocksArr[4] == "O")
-  ) {
-    if (blocksArr[6] == "a") {
-      comChoice = 6;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[1] == "O" && blocksArr[4] == "O") ||
-    (blocksArr[6] == "O" && blocksArr[8] == "O")
-  ) {
-    if (blocksArr[7] == "a") {
-      comChoice = 7;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[6] == "O" && blocksArr[7] == "O") ||
-    (blocksArr[2] == "O" && blocksArr[5] == "O") ||
-    (blocksArr[0] == "O" && blocksArr[4] == "O")
-  ) {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[0] == "O" && blocksArr[5] == "O") {
-    //odd cases
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[0] == "O" && blocksArr[7] == "O") {
-    if (blocksArr[6] == "a") {
-      comChoice = 6;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[0] == "O" && blocksArr[8] == "O") {
-    if (blocksArr[6] == "a") {
-      comChoice = 1;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[1] == "O" && blocksArr[3] == "O") ||
-    (blocksArr[1] == "O" && blocksArr[6] == "O")
-  ) {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[1] == "O" && blocksArr[5] == "O") ||
-    (blocksArr[1] == "O" && blocksArr[8] == "O")
-  ) {
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[1] == "O" && blocksArr[7] == "O") {
-    if (blocksArr[5] == "a") {
-      comChoice = 5;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[2] == "O" && blocksArr[3] == "O") {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[2] == "O" && blocksArr[7] == "O") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[2] == "O" && blocksArr[6] == "O") ||
-    (blocksArr[0] == "O" && blocksArr[8] == "O")
-  ) {
-    if (blocksArr[1] == "a") {
-      comChoice = 1;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[5] == "O" && blocksArr[3] == "O") ||
-    (blocksArr[1] == "O" && blocksArr[7] == "O")
-  ) {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[3] == "O" && blocksArr[7] == "O") {
-    if (blocksArr[6] == "a") {
-      comChoice = 6;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[5] == "O" && blocksArr[7] == "O") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[5] == "O" && blocksArr[6] == "O") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[5] == "O" && blocksArr[0] == "O") {
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[6] == "O" && blocksArr[5] == "O") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[6] == "O" && blocksArr[1] == "O") {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  }  else if ( 
-    (blocksArr[0] == "X" && blocksArr[1] == "X") ||
-    (blocksArr[5] == "X" && blocksArr[8] == "X") ||
-    (blocksArr[6] == "X" && blocksArr[4] == "X")
-  ) {
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[1] == "X" && blocksArr[2] == "X") ||
-    (blocksArr[3] == "X" && blocksArr[6] == "X") ||
-    (blocksArr[4] == "X" && blocksArr[8] == "X")
-  ) {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[0] == "X" && blocksArr[2] == "X") ||
-    (blocksArr[4] == "X" && blocksArr[7] == "X")
-  ) {
-    if (blocksArr[1] == "a") {
-      comChoice = 1;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[0] == "X" && blocksArr[6] == "X") ||
-    (blocksArr[4] == "X" && blocksArr[5] == "X")
-  ) {
-    if (blocksArr[3] == "a") {
-      comChoice = 3;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[2] == "X" && blocksArr[8] == "X") {
-    if (blocksArr[5] == "a") {
-      comChoice = 5;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[0] == "X" && blocksArr[3] == "X") ||
-    (blocksArr[7] == "X" && blocksArr[8] == "X") ||
-    (blocksArr[2] == "X" && blocksArr[4] == "X")
-  ) {
-    if (blocksArr[6] == "a") {
-      comChoice = 6;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[1] == "X" && blocksArr[4] == "X") ||
-    (blocksArr[6] == "X" && blocksArr[8] == "X")
-  ) {
-    if (blocksArr[7] == "a") {
-      comChoice = 7;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[6] == "X" && blocksArr[7] == "X") ||
-    (blocksArr[2] == "X" && blocksArr[5] == "X") ||
-    (blocksArr[0] == "X" && blocksArr[4] == "X")
-  ) {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[0] == "X" && blocksArr[5] == "X") {
-    //odd cases
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[0] == "X" && blocksArr[7] == "X") {
-    if (blocksArr[6] == "a") {
-      comChoice = 6;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[0] == "X" && blocksArr[8] == "X") {
-    if (blocksArr[6] == "a") {
-      comChoice = 1;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[1] == "X" && blocksArr[3] == "X") ||
-    (blocksArr[1] == "X" && blocksArr[6] == "X")
-  ) {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[1] == "X" && blocksArr[5] == "X") ||
-    (blocksArr[1] == "X" && blocksArr[8] == "X")
-  ) {
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[1] == "X" && blocksArr[7] == "X") {
-    if (blocksArr[5] == "a") {
-      comChoice = 5;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[2] == "X" && blocksArr[3] == "X") {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[2] == "X" && blocksArr[7] == "X") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[2] == "X" && blocksArr[6] == "X") ||
-    (blocksArr[0] == "X" && blocksArr[8] == "X")
-  ) {
-    if (blocksArr[1] == "a") {
-      comChoice = 1;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    (blocksArr[5] == "X" && blocksArr[3] == "X") ||
-    (blocksArr[1] == "X" && blocksArr[7] == "X")
-  ) {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[3] == "X" && blocksArr[7] == "X") {
-    if (blocksArr[6] == "a") {
-      comChoice = 6;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[5] == "X" && blocksArr[7] == "X") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[5] == "X" && blocksArr[6] == "X") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[5] == "X" && blocksArr[0] == "X") {
-    if (blocksArr[2] == "a") {
-      comChoice = 2;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[6] == "X" && blocksArr[5] == "X") {
-    if (blocksArr[8] == "a") {
-      comChoice = 8;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (blocksArr[6] == "X" && blocksArr[1] == "X") {
-    if (blocksArr[0] == "a") {
-      comChoice = 0;
-    } else {
-      comChoice = randomChoice();
-    }
-  } else if (
-    blocksArr[0] == "X" ||
-    blocksArr[1] == "X" ||
-    blocksArr[2] == "X" ||
-    blocksArr[3] == "X" ||
-    blocksArr[5] == "X" ||
-    blocksArr[6] == "X" ||
-    blocksArr[7] == "X" ||
-    blocksArr[8] == "X" ||
-    blocksArr[9] == "X"
-  ) {
-    box.style.animation = "none";
-    comChoice = 4;
-  } else if (blocksArr[4] == "X") {
-    comChoice = Math.floor(Math.random() * 3);
   } else {
-    comChoice = randomChoice();
+    var bestScore = 10000;
+    for (var i = 0; i < moves.length; i++) {
+      if (moves[i].score < bestScore) {
+        bestScore = moves[i].score;
+        bestMove = i;
+      }
+    }
   }
+
+  return moves[bestMove];
 }
 
-blockOne.addEventListener("click", () => {
-  if (blocksArr[0] == "a") {
-    cChoiceFlag = 0;
-    blockOne.innerText = "X";
-    blocksArr[0] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[0] == "O") {
-    return;
-  }
-});
-
-blockTwo.addEventListener("click", () => {
-  if (blocksArr[1] == "a") {
-    cChoiceFlag = 0;
-    blockTwo.innerText = "X";
-    blocksArr[1] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[1] == "O") {
-    return;
-  }
-});
-
-blockThree.addEventListener("click", () => {
-  if (blocksArr[2] == "a") {
-    cChoiceFlag = 0;
-    blockThree.innerText = "X";
-    blocksArr[2] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[2] == "O") {
-    return;
-  }
-});
-
-blockFour.addEventListener("click", () => {
-  if (blocksArr[3] == "a") {
-    cChoiceFlag = 0;
-    blockFour.innerText = "X";
-    blocksArr[3] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[3] == "O") {
-    return;
-  }
-});
-
-blockFive.addEventListener("click", () => {
-  if (blocksArr[4] == "a") {
-    cChoiceFlag = 0;
-    blockFive.innerText = "X";
-    blocksArr[4] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[4] == "O") {
-    return;
-  }
-});
-
-blockSix.addEventListener("click", () => {
-  if (blocksArr[5] == "a") {
-    cChoiceFlag = 0;
-    blockSix.innerText = "X";
-    blocksArr[5] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[5] == "O") {
-    return;
-  }
-});
-
-blockSeven.addEventListener("click", () => {
-  if (blocksArr[6] == "a") {
-    cChoiceFlag = 0;
-    blockSeven.innerText = "X";
-    blocksArr[6] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[6] == "O") {
-    return;
-  }
-});
-
-blockEight.addEventListener("click", () => {
-  if (blocksArr[7] == "a") {
-    cChoiceFlag = 0;
-    blockEight.innerText = "X";
-    blocksArr[7] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-  } else if (blocksArr[7] == "O") {
-    return;
-  }
-});
-
-blockNine.addEventListener("click", () => {
-  if (blocksArr[8] == "a") {
-    cChoiceFlag = 0;
-    blockNine.innerText = "X";
-    blocksArr[8] = "X";
-    computerO();
-    blocksArr[comChoice] = "O";
-    comScreen(comChoice);
-    checkStatus();
-    console.log(blocksArr);
-  } else if (blocksArr[8] == "O") {
-    return;
-  }
-});
-
-//algo
-
-function checkStatus() {
-  if (blocksArr[0] == "X" && blocksArr[1] == "X" && blocksArr[2] == "X") {
-    resultScreen.style.transform = "translateY(0)";
-    blockOne.style.color = "ghostwhite";
-    blockTwo.style.color = "ghostwhite";
-    blockThree.style.color = "ghostwhite";
-   
-  } else if (
-    blocksArr[3] == "X" &&
-    blocksArr[4] == "X" &&
-    blocksArr[5] == "X"
-  ) {
-    resultScreen.style.transform = "translateY(0)";
-    blockFour.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockSix.style.color = "ghostwhite";
-  } else if (
-    blocksArr[6] == "X" &&
-    blocksArr[7] == "X" &&
-    blocksArr[8] == "X"
-  ) {
-    resultScreen.style.transform = "translateY(0)";
-    blockSeven.style.color = "ghostwhite";
-    blockEight.style.color = "ghostwhite";
-    blockNine.style.color = "ghostwhite";
-  } else if (
-    blocksArr[0] == "X" &&
-    blocksArr[3] == "X" &&
-    blocksArr[6] == "X"
-  ) {
-    resultScreen.style.transform = "translateY(0)";
-    blockOne.style.color = "ghostwhite";
-    blockFour.style.color = "ghostwhite";
-    blockSeven.style.color = "ghostwhite";
-  } else if (
-    blocksArr[1] == "X" &&
-    blocksArr[4] == "X" &&
-    blocksArr[7] == "X"
-  ) {
-    resultScreen.style.transform = "translateY(0)";
-    blockTwo.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockEight.style.color = "ghostwhite";
-  } else if (
-    blocksArr[2] == "X" &&
-    blocksArr[5] == "X" &&
-    blocksArr[8] == "X"
-  ) {
-    resultScreen.style.transform = "translateY(0)";
-    blockThree.style.color = "ghostwhite";
-    blockSix.style.color = "ghostwhite";
-    blockNine.style.color = "ghostwhite";
-  } else if (
-    blocksArr[0] == "X" &&
-    blocksArr[4] == "X" &&
-    blocksArr[8] == "X"
-  ) {
-    resultScreen.style.transform = "translateY(0)"
-    blockOne.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockNine.style.color = "ghostwhite";;
-  } else if (
-    blocksArr[2] == "X" &&
-    blocksArr[4] == "X" &&
-    blocksArr[6] == "X"
-  ) {
-    resultScreen.style.transform = "translateY(0)";
-    blockThree.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockSeven.style.color = "ghostwhite";
-  } else if (
-    blocksArr[0] == "O" &&
-    blocksArr[1] == "O" &&
-    blocksArr[2] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockOne.style.color = "ghostwhite";
-    blockTwo.style.color = "ghostwhite";
-    blockThree.style.color = "ghostwhite";
-  } else if (
-    blocksArr[3] == "O" &&
-    blocksArr[4] == "O" &&
-    blocksArr[5] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockFour.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockSix.style.color = "ghostwhite";
-  } else if (
-    blocksArr[6] == "O" &&
-    blocksArr[7] == "O" &&
-    blocksArr[8] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockSeven.style.color = "ghostwhite";
-    blockEight.style.color = "ghostwhite";
-    blockNine.style.color = "ghostwhite";
-  } else if (
-    blocksArr[0] == "O" &&
-    blocksArr[3] == "O" &&
-    blocksArr[6] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockOne.style.color = "ghostwhite";
-    blockFour.style.color = "ghostwhite";
-    blockSeven.style.color = "ghostwhite";
-  } else if (
-    blocksArr[1] == "O" &&
-    blocksArr[4] == "O" &&
-    blocksArr[7] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockTwo.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockEight.style.color = "ghostwhite";
-  } else if (
-    blocksArr[2] == "O" &&
-    blocksArr[5] == "O" &&
-    blocksArr[8] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockThree.style.color = "ghostwhite";
-    blockSix.style.color = "ghostwhite";
-    blockNine.style.color = "ghostwhite";
-  } else if (
-    blocksArr[0] == "O" &&
-    blocksArr[4] == "O" &&
-    blocksArr[8] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockOne.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockNine.style.color = "ghostwhite";
-  } else if (
-    blocksArr[2] == "O" &&
-    blocksArr[4] == "O" &&
-    blocksArr[6] == "O"
-  ) {
-    resultScreen.style.transform = "translateY(-120px)";
-    blockThree.style.color = "ghostwhite";
-    blockFive.style.color = "ghostwhite";
-    blockSeven.style.color = "ghostwhite";
-  } else if (
-    blocksArr[0] != "a" &&
-    blocksArr[1] != "a" &&
-    blocksArr[2] != "a" &&
-    blocksArr[3] != "a" &&
-    blocksArr[4] != "a" &&
-    blocksArr[5] != "a" &&
-    blocksArr[6] != "a" &&
-    blocksArr[7] != "a" &&
-    blocksArr[8] != "a"
-  ) {
-    resultScreen.style.transform = "translateY(-190px)";
-    blockOne.style.color = "brown";
-    blockTwo.style.color = "brown";
-    blockThree.style.color = "brown";
-    blockFour.style.color = "brown";
-    blockFive.style.color = "brown";
-    blockSix.style.color = "brown";
-    blockSeven.style.color = "brown";
-    blockEight.style.color = "brown";
-    blockNine.style.color = "brown";
-  }
-}
