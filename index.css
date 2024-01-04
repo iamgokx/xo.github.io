@@ -1,22 +1,6 @@
 body {
   background-image: linear-gradient(
     to right top,
-    #accbff,
-    #9bc0ff,
-    #89b5ff,
-    #77a9ff,
-    #649eff
-  );
-  background-image: linear-gradient(
-    to right top,
-    #9ae5ff,
-    #b2ebfa,
-    #c9f0f7,
-    #e1f5f7,
-    #f7f9f9
-  );
-  background-image: linear-gradient(
-    to right top,
     #0c2233,
     #161927,
     #17121b,
@@ -24,8 +8,9 @@ body {
     #000000
   );
   background-repeat: no-repeat;
-  height: 100vh;
+  background-size: cover;
   width: 100vw;
+  height: 100vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -33,7 +18,6 @@ body {
   flex-direction: column;
   font-family: "Raleway", sans-serif;
   gap: 20px;
-  transition: all 0.5s;
   overflow: hidden;
 }
 
@@ -253,9 +237,3 @@ align-items: center;
   }
 }
 
-@media  screen and (max-width:600px) {
-  .blob{
-    width: 400px;
-    height: 400px;
-  }
-}
