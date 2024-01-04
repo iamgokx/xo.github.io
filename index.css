@@ -1,3 +1,8 @@
+*{
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
 body {
   background-image: linear-gradient(
     to right top,
@@ -8,10 +13,10 @@ body {
     #000000
   );
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size:700%;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,6 +36,7 @@ td {
   cursor: pointer;
   transition: 0.5s;
   animation-timing-function: ease;
+  overflow: hidden;
 }
 
 td:hover {
@@ -60,8 +66,8 @@ table tr td:last-child {
 
 .endgame {
   font-family: "Raleway", sans-serif;
-  width: 200px;
-  height: 30px;
+  width: 210px;
+  height: 45px;
   padding: 10px;
   background: rgb(117, 167, 253);
   border-radius: 5px;
@@ -118,7 +124,9 @@ button:active {
 .blob {
   background: rgb(65, 136, 255);
   width: 500px;
+  min-width: 400px;
   height: 500px;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,6 +154,7 @@ button:active {
   transition: 0.5s;
   animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   border-radius: 50%;
+  overflow: hidden;
 }
 
 #aidraw {
@@ -163,6 +172,7 @@ button:active {
   transition: 0.5s;
   animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   border-radius: 50%;
+  overflow: hidden;
 }
 
 #rotatingelem {
@@ -182,6 +192,7 @@ justify-content: center;
 align-items: center;
   transform-style: preserve-3d;
   animation: rotateAnimation 10s infinite;
+  overflow: hidden;
 }
 
 
@@ -198,6 +209,7 @@ align-items: center;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
   -moz-animation: glow 1s ease-in-out infinite alternate;
   animation: glow 1s ease-in-out infinite alternate;
+  overflow: hidden;
 }
 
 @keyframes glow {
